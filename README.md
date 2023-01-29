@@ -32,7 +32,7 @@ And remember: With great power comes... (we already know).
 Level 1 | Basic | Complete
 ------------------------------------------------|------------------------------------------------|-----------------------------------------
 [000](Projects/000/README.md) | TCP or UDP server just to receive messages | :heavy_check_mark:
-[001] | TCP chat server | :x:
+[001](Projects/001/README.md) | TCP chat server | :x:
 [002] | UDP chat server | :x:
 [003] | Multi-threaded UDP or TCP chat server | :x:
 [004] | Server for file transfers | :x:
