@@ -31,7 +31,7 @@ And remember: With great power comes... (we already know).
 -------------------------------------------------------------------------------------------------------------------------------------------
 Level 1 | Basic | Complete
 ------------------------------------------------|------------------------------------------------|-----------------------------------------
-[000] | TCP or UDP server just to receive messages | :x:
+[000](Projects/000/README.md) | TCP or UDP server just to receive messages | :x:
 [001] | TCP chat server | :x:
 [002] | UDP chat server | :x:
 [003] | Multi-threaded UDP or TCP chat server | :x:
