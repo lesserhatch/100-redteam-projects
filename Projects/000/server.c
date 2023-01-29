@@ -8,7 +8,6 @@
 #include <sys/types.h>
 #include <unistd.h>
 
-#define MY_PORT "3489"
 #define MY_BACKLOG 10
 
 int open_socket(char *port);
@@ -23,7 +22,12 @@ int main(int argc, char *argv[]) {
   struct sockaddr_storage their_addr;
   socklen_t sin_size = sizeof their_addr;
 
-  sockfd = open_socket(MY_PORT);
+  if (argc != 2) {
+    printf("Usage: server <PORT>\n");
+    exit(1);
+  }
+
+  sockfd = open_socket(argv[1]);
 
   while (1) {
     int new_fd = accept(sockfd, (struct sockaddr *)&their_addr, &sin_size);
