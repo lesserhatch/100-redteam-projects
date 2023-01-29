@@ -1,6 +1,7 @@
 #include <arpa/inet.h>
 #include <errno.h>
 #include <netdb.h>
+#include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -14,6 +15,16 @@ int open_socket(char *port);
 int receive_message(int sockfd);
 void *get_in_addr(struct sockaddr *sa);
 
+void sigchld_handler(int s) {
+  // waitpid() might overwrite errno, so we save and restore it:
+  int saved_errno = errno;
+
+  while (waitpid(-1, NULL, WNOHANG) > 0)
+    ;
+
+  errno = saved_errno;
+}
+
 /// Buffer to receive data from socket listener
 char receive_buffer[1024];
 
@@ -21,9 +32,18 @@ int main(int argc, char *argv[]) {
   int sockfd;
   struct sockaddr_storage their_addr;
   socklen_t sin_size = sizeof their_addr;
+  struct sigaction sa;
 
   if (argc != 2) {
     printf("Usage: server <PORT>\n");
+    exit(1);
+  }
+
+  sa.sa_handler = sigchld_handler; // reap all dead processes
+  sigemptyset(&sa.sa_mask);
+  sa.sa_flags = SA_RESTART;
+  if (sigaction(SIGCHLD, &sa, NULL) == -1) {
+    perror("sigaction");
     exit(1);
   }
 
